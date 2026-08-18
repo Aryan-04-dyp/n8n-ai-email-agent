@@ -1,0 +1,36 @@
+# Environment Variables
+.env
+.env.*
+*.env
+
+# Node.js Dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# n8n Credentials & Secrets
+credentials.json
+config.json
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor Settings
+.vscode/
+.idea/
+
+# Temporary Files
+*.tmp
+*.temp
+
+# npm Debug Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local n8n Data
+.n8n/
+Add .gitignore
