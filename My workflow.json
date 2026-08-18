@@ -1,0 +1,161 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there👋 \nMy name is Lunetic- your email sending agent\nHow can i help you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "8b1a0913-51a2-461a-b984-b32c80e3e2e7",
+      "name": "When chat message received",
+      "webhookId": "5fbc1ec0-8bb0-4f56-b3a2-5bd32767cc2a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a very polite email agent.You have to send emails based on the requirements sent by the user through chat.\n\nYou can use \"Send email\" tool for sending email.\n\nMake sure you right at the end Best Regards or thanks Aryan accordindly.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "4b8e0dec-b87d-4732-b4e0-d2afdfd910fb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        16,
+        192
+      ],
+      "id": "1118473b-5a47-44cb-939c-4f5920c9e9c5",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "FlKqn6ZNg71vbIPt",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        224,
+        160
+      ],
+      "id": "fc7af077-1b59-4a7d-98bb-0d949a152329",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        496,
+        128
+      ],
+      "id": "8ba8993c-7794-4539-88f6-85e7bc7ee266",
+      "name": "Send email tool",
+      "webhookId": "c3137c8b-5c70-449c-ad85-519da8b2ba03",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V61izk4mnzBJxgKL",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5c0f7387-7b8a-4f95-b710-2b6fd49d18d7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d5dad5998477a05222939865f9a3a7d8ec606095058811f630583e10029f9b02"
+  },
+  "nodeGroups": [],
+  "id": "kVqlKeK9So9mQPq8",
+  "tags": []
+}
